@@ -200,7 +200,7 @@ class Spell extends React.Component {
         return (
             <div>
                 <a class="popup-link" href={`#	${this.state.titleEn}	 `} onClick={this.openPopup}>
-                    <div class="searchable cardspell popup_link spell	0st	  	Abjuration	  	1Act	  		  	Touch	  	1R	  	V S	  	Cleric	  	Un36	  ">
+                    <div class="searchable cardspell popup_link spell">
                         <img class="imgspell" src={`${this.state.image}`} alt="" />
                         <div>
                             <p class="cardnam"> {`${this.state.titleUa}`} </p>
