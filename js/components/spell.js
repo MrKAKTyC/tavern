@@ -6,62 +6,70 @@ class SpeelList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            filtersOptions: [],
+            data: null
         }
-        void fetch(spellDataPath).then((resp) => {
-            resp.json().then((data) => {
-                const filters = {
-                    source: new Set(),
-                    lvl: new Set(),
-                    school: new Set(),
-                    castingDuration: new Set(),
-                    distance: new Set(),
-                    effectDuration: new Set(),
-                    components: new Set(),
-                    classes: new Set(),
-                }
-
-                data?.forEach((spellData) => {
-                    filters.source.add(spellData.source)
-                    filters.lvl.add(spellData.lvl)
-                    filters.school.add(spellData.school)
-                    filters.castingDuration.add(spellData.castingDuration)
-                    filters.distance.add(spellData.distance)
-                    filters.effectDuration.add(spellData.effectDuration)
-                    spellData.components.forEach(filters.components.add, filters.components)
-                    spellData.classes.forEach(filters.classes.add, filters.classes)
-                })
-
-                this.setState({
-                    filtersOptions: filters,
-                    data
-                })
-            })
-        })
     }
 
-    setFilter(newValue, field) {
-        const activeFilters = this.state.activeFilters || {}
-        if (newValue.length) {
-            activeFilters[field] = newValue
-        } else {
-            delete activeFilters[field]
+    async componentDidMount() {
+        const response = await fetch(spellDataPath);
+        const data = await response.json();
+        const filters = {
+            source: new Set(),
+            lvl: new Set(),
+            school: new Set(),
+            castingDuration: new Set(),
+            distance: new Set(),
+            effectDuration: new Set(),
+            components: new Set(),
+            classes: new Set(),
         }
+
+        data?.forEach((spellData) => {
+            filters.source.add(spellData.source)
+            filters.lvl.add(spellData.lvl)
+            filters.school.add(spellData.school)
+            filters.castingDuration.add(spellData.castingDuration)
+            filters.distance.add(spellData.distance)
+            filters.effectDuration.add(spellData.effectDuration)
+            spellData.components.forEach(filters.components.add, filters.components)
+            spellData.classes.forEach(filters.classes.add, filters.classes)
+        })
+
         this.setState({
-            activeFilters
+            filtersOptions: filters,
+            data
         })
-    }
+
+      }
+
+      setFilter(newValue, field) {
+        this.setState(prevState => {
+          const { activeFilters } = prevState;
+          if (newValue.length) {
+            return { activeFilters: { ...activeFilters, [field]: newValue } };
+          } else {
+            const { [field]: value, ...newFilters } = activeFilters;
+            return { activeFilters: newFilters };
+          }
+        });
+      }
 
     render() {
-        const activeFiltersData = this.state.activeFilters || {}
-        const activeFilters = Object.keys(activeFiltersData)
-        let spellDataList = this.state?.data
+        const activeFiltersData = this.state.activeFilters || {};
+        const activeFilters = Object.keys(activeFiltersData);
+        let spellDataList = this.state.data;
+        
         if (activeFilters.length) {
-            spellDataList = this.state?.data?.filter((spellData) => {
-                const isNotFilter = activeFilters.find((filterName) => {
-                    return !activeFiltersData[filterName].some(r=> spellData[filterName].includes(r))
-                })
-                return !isNotFilter
-            })
+          spellDataList = spellDataList.filter((spellData) => {
+            const isNotInFilter = activeFilters.every((filterName) => {
+              const filterValues = activeFiltersData[filterName];
+              const spellDataValues = Array.isArray(spellData[filterName]) ? spellData[filterName] : [spellData[filterName]];
+              return filterValues.some((filterValue) => spellDataValues.includes(filterValue));
+            });
+        
+            return !isNotInFilter;
+          });
         }
 
         const spellElemnts = spellDataList?.map((spellData) => {
@@ -78,17 +86,17 @@ class SpeelList extends React.Component {
         return (
             <div>
 
-                <input class="inp" type="text" id="search-input" placeholder="🔍︎ Пошук закляття" />
-                <details class="parar">
+                <input className="inp" type="text" id="search-input" placeholder="🔍︎ Пошук закляття" />
+                <details className="parar">
                     <summary>
                         <p>
                             Фільтри
-                            <img class="inpimg" src="../img/фільтр1.png" alt="" />
+                            <img className="inpimg" src="../img/фільтр1.png" alt="" />
                         </p>
 
                         <hr />
                     </summary>
-                    <p class="parartex" />
+                    <p className="parartex" />
                     {filterElements}
 
                 </details>
@@ -144,16 +152,16 @@ class Filter extends React.Component {
     render() {
         const filterOptions = Array.from(this.props.filter?.options?.values()).map((option, i) => {
             return (
-                <li class={'filt ' + this.isActive(option)} key={option} onClick={() => this.toggeFilter(option)}>
+                <li className={'filt ' + this.isActive(option)} key={option} onClick={() => this.toggeFilter(option)}>
                     {option}
                 </li>
             )
         })
         return (<div>
-            <nav class="spellingp">
-                <p class="pfil">{this.filterNames[this.props.filter.name]}</p>
+            <nav className="spellingp">
+                <p className="pfil">{this.filterNames[this.props.filter.name]}</p>
                 <ul>
-                    <li class='filt ' onClick={() => this.clearFilter()}>
+                    <li className='filt ' onClick={() => this.clearFilter()}>
                         Всі
                     </li>
                     {filterOptions}
@@ -199,33 +207,33 @@ class Spell extends React.Component {
     render() {
         return (
             <div>
-                <a class="popup-link" href={`#	${this.state.titleEn}	 `} onClick={this.openPopup}>
-                    <div class="searchable cardspell popup_link spell">
-                        <img class="imgspell" src={`${this.state.image}`} alt="" />
+                <a className="popup-link" href={`#	${this.state.titleEn}	 `} onClick={this.openPopup}>
+                    <div className="searchable cardspell popup_link spell">
+                        <img className="imgspell" src={`${this.state.image}`} alt="" />
                         <div>
-                            <p class="cardnam"> {`${this.state.titleUa}`} </p>
-                            <p class="carding"> {`${this.state.titleEn}`} </p>
+                            <p className="cardnam"> {`${this.state.titleUa}`} </p>
+                            <p className="carding"> {`${this.state.titleEn}`} </p>
                         </div>
                     </div>
                 </a>
-                <div class={this.state.popup.class} id={`	${this.state.titleEn}	 `}>
-                    <div class="popup_body">
-                        <div class="popup_content">
-                            <a href="###" class="popup_close close-popup" onClick={this.closePopup}>Х</a>
-                            <p class="cardnamp"> {`${this.state.titleUa}`} </p>
-                            <p class="cardingp"> {`${this.state.titleEn}`} </p>
-                            <p class="cardmatp"> {`${this.state.source}`} </p>
-                            <p class="cardmatp"><b> {`${this.state.lvl}`} </b></p>
-                            <p class="cardmatp"><b> </b></p>
-                            <p class="cardmatp"><b>Школа:</b> {`${this.state.school}`} </p>
-                            <p class="cardmatp"><b>Час накладання:</b> {`${this.state.castingDuration}`} </p>
-                            <p class="cardmatp"><b>Діапазон:</b> {`${this.state.distance}`} </p>
-                            <p class="cardmatp"><b>Тривалість:</b> {`${this.state.effectDuration}`} </p>
-                            <p class="cardmatp"><b>Компонент:</b> {`${this.state.components}`} </p>
-                            <p class="cardmatp"> </p>
+                <div className={this.state.popup.class} id={`	${this.state.titleEn}	 `}>
+                    <div className="popup_body">
+                        <div className="popup_content">
+                            <a href="###" className="popup_close close-popup" onClick={this.closePopup}>Х</a>
+                            <p className="cardnamp"> {`${this.state.titleUa}`} </p>
+                            <p className="cardingp"> {`${this.state.titleEn}`} </p>
+                            <p className="cardmatp"> {`${this.state.source}`} </p>
+                            <p className="cardmatp"><b> {`${this.state.lvl}`} </b></p>
+                            <p className="cardmatp"><b> </b></p>
+                            <p className="cardmatp"><b>Школа:</b> {`${this.state.school}`} </p>
+                            <p className="cardmatp"><b>Час накладання:</b> {`${this.state.castingDuration}`} </p>
+                            <p className="cardmatp"><b>Діапазон:</b> {`${this.state.distance}`} </p>
+                            <p className="cardmatp"><b>Тривалість:</b> {`${this.state.effectDuration}`} </p>
+                            <p className="cardmatp"><b>Компонент:</b> {`${this.state.components}`} </p>
+                            <p className="cardmatp"> </p>
                             <hr />
-                            <p class="cardtex"> </p>
-                            <p class="cardmatp"><b>Класи що володіють закляттям:</b> {`${this.state.classes}`} </p>
+                            <p className="cardtex"> </p>
+                            <p className="cardmatp"><b>Класи що володіють закляттям:</b> {`${this.state.classes}`} </p>
                         </div>
                     </div>
                 </div>
