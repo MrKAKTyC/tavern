@@ -6,14 +6,18 @@ class SpeelList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            activeFilters: {},
             filtersOptions: [],
-            data: null
+            searchQuery: '',
+            spellListData: null
         }
+
+        this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
     async componentDidMount() {
         const response = await fetch(spellDataPath);
-        const data = await response.json();
+        const spellListData = await response.json();
         const filters = {
             source: new Set(),
             lvl: new Set(),
@@ -25,7 +29,7 @@ class SpeelList extends React.Component {
             classes: new Set(),
         }
 
-        data?.forEach((spellData) => {
+        spellListData?.forEach((spellData) => {
             filters.source.add(spellData.source)
             filters.lvl.add(spellData.lvl)
             filters.school.add(spellData.school)
@@ -38,41 +42,47 @@ class SpeelList extends React.Component {
 
         this.setState({
             filtersOptions: filters,
-            data
+            spellListData
         })
 
-      }
+    }
 
-      setFilter(newValue, field) {
+    handleSearchChange(event) {
+        this.setState({ searchQuery: event.target.value });
+    }
+
+    setFilter(newValue, field) {
         this.setState(prevState => {
-          const { activeFilters } = prevState;
-          if (newValue.length) {
-            return { activeFilters: { ...activeFilters, [field]: newValue } };
-          } else {
-            const { [field]: value, ...newFilters } = activeFilters;
-            return { activeFilters: newFilters };
-          }
+            const { activeFilters } = prevState;
+            if (newValue.length) {
+                return { activeFilters: { ...activeFilters, [field]: newValue } };
+            } else {
+                const { [field]: value, ...newFilters } = activeFilters;
+                return { activeFilters: newFilters };
+            }
         });
-      }
+    }
 
     render() {
-        const activeFiltersData = this.state.activeFilters || {};
-        const activeFilters = Object.keys(activeFiltersData);
-        let spellDataList = this.state.data;
-        
-        if (activeFilters.length) {
-          spellDataList = spellDataList.filter((spellData) => {
-            const isNotInFilter = activeFilters.every((filterName) => {
-              const filterValues = activeFiltersData[filterName];
-              const spellDataValues = Array.isArray(spellData[filterName]) ? spellData[filterName] : [spellData[filterName]];
-              return filterValues.some((filterValue) => spellDataValues.includes(filterValue));
-            });
-        
-            return !isNotInFilter;
-          });
-        }
+        const { activeFilters, searchQuery, spellListData } = this.state
+        const activeFiltersKeys = Object.keys(activeFilters);
 
-        const spellElemnts = spellDataList?.map((spellData) => {
+        const filteredSpellListData = spellListData?.filter(
+            (spellData) => {
+                const isNotInFilter = activeFiltersKeys.every((filterName) => {
+                    const filterValues = activeFilters[filterName];
+                    const spellDataValues = Array.isArray(spellData[filterName]) ? spellData[filterName] : [spellData[filterName]];
+                    return filterValues.some((filterValue) => spellDataValues.includes(filterValue));
+                });
+                const isInSearch = spellData.titleUa.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    spellData.titleEn.toLowerCase().includes(searchQuery.toLowerCase())
+                return isNotInFilter && isInSearch;
+
+
+            }
+        );
+
+        const spellElemnts = filteredSpellListData?.map((spellData) => {
             return (<Spell key={`${spellData.titleEn}-${spellData.source}`} spell={spellData} />)
         })
 
@@ -85,8 +95,8 @@ class SpeelList extends React.Component {
         })
         return (
             <div>
+                <input className="inp" type="text" placeholder="🔍︎ Пошук закляття" value={searchQuery} onChange={this.handleSearchChange} />
 
-                <input className="inp" type="text" id="search-input" placeholder="🔍︎ Пошук закляття" />
                 <details className="parar">
                     <summary>
                         <p>
@@ -111,14 +121,14 @@ class SpeelList extends React.Component {
 class Filter extends React.Component {
 
     filterNames = {
-        'source' : 'Джерело',
-        'lvl' : 'Рівень',
-        'school' : 'Школа',
-        'castingDuration' : 'Час накладання',
-        'distance' : 'Діапазон',
-        'effectDuration' : 'Тривалість',
-        'components' : 'Компонент',
-        'classes' : 'Класи що володіють закляттям',
+        'source': 'Джерело',
+        'lvl': 'Рівень',
+        'school': 'Школа',
+        'castingDuration': 'Час накладання',
+        'distance': 'Діапазон',
+        'effectDuration': 'Тривалість',
+        'components': 'Компонент',
+        'classes': 'Класи що володіють закляттям',
     }
     constructor(props) {
         super(props)
