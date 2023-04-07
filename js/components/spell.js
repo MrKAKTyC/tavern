@@ -185,11 +185,10 @@ class Filter extends React.Component {
 class Spell extends React.Component {
     constructor(props) {
         super(props);
-        this.state = props.spell
-        this.state.popup = {
-            isOpen: false,
+        this.state = {
+            spell: props.spell,
+            isPopupOpen: false,
         }
-        this.state.popup.class = this.state.popup.isOpen ? 'popup open' : 'popup'
 
         this.openPopup = this.openPopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
@@ -198,55 +197,45 @@ class Spell extends React.Component {
 
     openPopup() {
         this.setState({
-            popup: {
-                isOpen: true,
-                class: 'popup open'
-            }
+            isPopupOpen: true
         })
     }
 
     closePopup() {
         this.setState({
-            popup: {
-                isOpen: false,
-                class: 'popup'
-            }
+            isPopupOpen: false
         })
     }
 
     render() {
+        const { isPopupOpen, spell } = this.state
         return (
             <div>
-                <a className="popup-link" href={`#	${this.state.titleEn}	 `} onClick={this.openPopup}>
+                <a className="popup-link" onClick={this.openPopup}>
                     <div className="searchable cardspell popup_link spell">
-                        <img className="imgspell" src={`${this.state.image}`} alt="" />
+                        <img className="imgspell" src={`${spell.image}`} alt="" />
                         <div>
-                            <p className="cardnam"> {`${this.state.titleUa}`} </p>
-                            <p className="carding"> {`${this.state.titleEn}`} </p>
+                            <p className="cardnam"> {`${spell.titleUa}`} </p>
+                            <p className="carding"> {`${spell.titleEn}`} </p>
                         </div>
                     </div>
                 </a>
-                <div className={this.state.popup.class} id={`	${this.state.titleEn}	 `}>
-                    <div className="popup_body">
-                        <div className="popup_content">
-                            <a href="###" className="popup_close close-popup" onClick={this.closePopup}>Х</a>
-                            <p className="cardnamp"> {`${this.state.titleUa}`} </p>
-                            <p className="cardingp"> {`${this.state.titleEn}`} </p>
-                            <p className="cardmatp"> {`${this.state.source}`} </p>
-                            <p className="cardmatp"><b> {`${this.state.lvl}`} </b></p>
-                            <p className="cardmatp"><b> </b></p>
-                            <p className="cardmatp"><b>Школа:</b> {`${this.state.school}`} </p>
-                            <p className="cardmatp"><b>Час накладання:</b> {`${this.state.castingDuration}`} </p>
-                            <p className="cardmatp"><b>Діапазон:</b> {`${this.state.distance}`} </p>
-                            <p className="cardmatp"><b>Тривалість:</b> {`${this.state.effectDuration}`} </p>
-                            <p className="cardmatp"><b>Компонент:</b> {`${this.state.components}`} </p>
-                            <p className="cardmatp"> </p>
-                            <hr />
-                            <p className="cardtex"> </p>
-                            <p className="cardmatp"><b>Класи що володіють закляттям:</b> {`${this.state.classes}`} </p>
-                        </div>
-                    </div>
-                </div>
+                {isPopupOpen && <Popup closePopup={() => this.closePopup()}>
+                    <p className="cardnamp"> {`${spell.titleUa}`} </p>
+                    <p className="cardingp"> {`${spell.titleEn}`} </p>
+                    <p className="cardmatp"> {`${spell.source}`} </p>
+                    <p className="cardmatp"><b> {`${spell.lvl}`} </b></p>
+                    <p className="cardmatp"><b> </b></p>
+                    <p className="cardmatp"><b>Школа:</b> {`${spell.school}`} </p>
+                    <p className="cardmatp"><b>Час накладання:</b> {`${spell.castingDuration}`} </p>
+                    <p className="cardmatp"><b>Діапазон:</b> {`${spell.distance}`} </p>
+                    <p className="cardmatp"><b>Тривалість:</b> {`${spell.effectDuration}`} </p>
+                    <p className="cardmatp"><b>Компонент:</b> {`${spell.components}`} </p>
+                    <p className="cardmatp"> </p>
+                    <hr />
+                    <p className="cardtex"> </p>
+                    <p className="cardmatp"><b>Класи що володіють закляттям:</b> {`${spell.classes}`} </p>
+                </Popup>}
             </div>
         );
     }
