@@ -27,6 +27,8 @@ class SpeelList extends React.Component {
             effectDuration: new Set(),
             components: new Set(),
             classes: new Set(),
+            isRitual: new Set(),
+            concentration: new Set(),
         }
 
         spellListData?.forEach((spellData) => {
@@ -36,6 +38,8 @@ class SpeelList extends React.Component {
             filters.castingDuration.add(spellData.castingDuration)
             filters.distance.add(spellData.distance)
             filters.effectDuration.add(spellData.effectDuration)
+            filters.isRitual.add(spellData.isRitual)
+            filters.concentration.add(spellData.concentration)
             spellData.components.forEach(filters.components.add, filters.components)
             spellData.classes.forEach(filters.classes.add, filters.classes)
         })
@@ -129,6 +133,8 @@ class Filter extends React.Component {
         'effectDuration': 'Тривалість',
         'components': 'Компонент',
         'classes': 'Класи що володіють закляттям',
+        'isRitual': 'Ритуал',
+        'concentration': 'Концентрація'
     }
     constructor(props) {
         super(props)
@@ -160,16 +166,17 @@ class Filter extends React.Component {
     }
 
     render() {
-        const filterOptions = Array.from(this.props.filter?.options?.values()).map((option, i) => {
+        const {options, name} = this.props.filter
+        const filterOptions = Array.from(options?.values()).map((option, i) => {
             return (
                 <li className={'filt ' + this.isActive(option)} key={option} onClick={() => this.toggeFilter(option)}>
-                    {option}
+                    {String(option)}
                 </li>
             )
         })
         return (<div>
             <nav className="spellingp">
-                <p className="pfil">{this.filterNames[this.props.filter.name]}</p>
+                <p className="pfil">{this.filterNames[name]}</p>
                 <ul>
                     <li className='filt ' onClick={() => this.clearFilter()}>
                         Всі
