@@ -19,16 +19,16 @@ class SpeelList extends React.Component {
         const response = await fetch(spellDataPath);
         const spellListData = await response.json();
         const filters = {
-            source: new Set(),
             lvl: new Set(),
-            school: new Set(),
-            castingDuration: new Set(),
-            distance: new Set(),
-            effectDuration: new Set(),
-            components: new Set(),
             classes: new Set(),
+            school: new Set(),
+            components: new Set(),
             isRitual: new Set(),
+            distance: new Set(),
+            castingDuration: new Set(),
+            effectDuration: new Set(),
             concentration: new Set(),
+            source: new Set(),
         }
 
         spellListData?.forEach((spellData) => {
@@ -125,16 +125,16 @@ class SpeelList extends React.Component {
 class Filter extends React.Component {
 
     filterNames = {
-        'source': 'Джерело',
         'lvl': 'Рівень',
+        'classes': 'Клас',
         'school': 'Школа',
-        'castingDuration': 'Час накладання',
-        'distance': 'Діапазон',
-        'effectDuration': 'Тривалість',
         'components': 'Компонент',
-        'classes': 'Класи що володіють закляттям',
         'isRitual': 'Ритуал',
-        'concentration': 'Концентрація'
+        'distance': 'Діапазон',
+        'castingDuration': 'Час накладання',
+        'effectDuration': 'Тривалість',
+        'concentration': 'Концентрація',
+        'source': 'Джерело',
     }
     constructor(props) {
         super(props)
@@ -167,10 +167,12 @@ class Filter extends React.Component {
 
     render() {
         const {options, name} = this.props.filter
+
         const filterOptions = Array.from(options?.values()).map((option, i) => {
+            const opt = typeof option === 'string' ? option : option ? 'Так' : 'Ні';
             return (
                 <li className={'filt ' + this.isActive(option)} key={option} onClick={() => this.toggeFilter(option)}>
-                    {String(option)}
+                    {opt}
                 </li>
             )
         })
@@ -230,11 +232,11 @@ class Spell extends React.Component {
                 {isPopupOpen && <Popup closePopup={() => this.closePopup()}>
                     <p className="cardnamp"> {`${spell.titleUa}`} </p>
                     <p className="cardingp"> {`${spell.titleEn}`} </p>
-                    <p className="cardmatp"> {`${spell.source}`} </p>
+                    <p className="cardmatp"> {`${spell.source} ${spell.sourceLink ?? ''}`} </p>
                     <p className="cardmatp"><b> {`${spell.lvl}`} </b></p>
-                    <p className="cardmatp"><b> </b></p>
+                    <p className="cardmatp"><b> {spell.isRitual && 'Ритуал'} </b></p>
                     <p className="cardmatp"><b>Школа:</b> {`${spell.school}`} </p>
-                    <p className="cardmatp"><b>Час накладання:</b> {`${spell.castingDuration}`} </p>
+                    <p className="cardmatp"><b>Час накладання:</b> {spell.concentration && 'Концентрація, '}{`${spell.castingDuration}`} </p>
                     <p className="cardmatp"><b>Діапазон:</b> {`${spell.distance}`} </p>
                     <p className="cardmatp"><b>Тривалість:</b> {`${spell.effectDuration}`} </p>
                     <p className="cardmatp"><b>Компонент:</b> {`${spell.components}`} </p>
