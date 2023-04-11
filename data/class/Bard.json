@@ -1,0 +1,207 @@
+{
+    "Level 1": [
+        {
+            "origin": "default",
+            "ability": "Bardic Inspiration",
+            "description": "You can use a bonus action to inspire an ally within 60 feet, giving them an inspiration die to roll and add to one ability check, attack roll, or saving throw."
+        },
+        {
+            "origin": "default",
+            "ability": "Spellcasting",
+            "description": "You gain the ability to cast spells as a bard, using the bard spell list."
+        }
+    ],
+    "Level 2": [
+        {
+            "origin": "default",
+            "ability": "Jack of All Trades",
+            "description": "You add half your proficiency bonus (rounded down) to any ability check that doesn't already include your proficiency bonus."
+        },
+        {
+            "origin": "default",
+            "ability": "Song of Rest",
+            "description": "You can use a short rest to play music and provide extra healing to yourself and your allies."
+        }
+    ],
+    "Level 3": [
+        {
+            "origin": "default",
+            "ability": "Bard College",
+            "description": "You choose a Bard College, such as College of Lore or College of Valor, which grants you additional abilities unique to that college."
+        },
+        {
+            "origin": "default",
+            "ability": "Expertise",
+            "description": "You gain expertise in two skills of your choice, and your proficiency bonus is doubled for any ability check you make with those skills."
+        },
+        {
+            "origin": "College of Valor",
+            "ability": "Bonus Proficiencies",
+            "description": "When you join the College of Valor at 3rd level, you gain proficiency with medium armor, shields, and martial weapons."
+        },
+        {
+            "origin": "College of Valor",
+            "ability": "Combat Inspiration",
+            "description": "Also at 3rd level, you learn to inspire others in battle. A creature that has a Bardic Inspiration die from you can roll that die and add the number rolled to a weapon damage roll it just made. Alternatively, when an attack roll is made against the creature, it can use its reaction to roll the Bardic Inspiration die and add the number rolled to its AC against that attack, after seeing the roll but before knowing whether it hits or misses."
+        },
+        {
+            "origin": "College of Lore",
+            "ability": "Bonus Proficiencies",
+            "description": "When you join the College of Valor at 3rd level, you gain proficiency with medium armor, shields, and martial weapons."
+        },
+        {
+            "origin": "College of Lore",
+            "ability": "Cutting Words",
+            "description": "Also at 3rd level, you learn how to use your wit to distract, confuse, and otherwise sap the confidence and competence of others. When a creature that you can see within 60 feet of you makes an attack roll, an ability check, or a damage roll, you can use your reaction to expend one of your uses of Bardic Inspiration, rolling a Bardic Inspiration die and subtracting the number rolled from the creature's roll. You can choose to use this feature after the creature makes its roll, but before the DM determines whether the attack roll or ability check succeeds or fails, or before the creature deals its damage. The creature is immune if it can't hear you or if it's immune to being charmed."
+        }
+    ],
+    "Level 4": [
+        {
+            "origin": "default",
+            "ability": "Ability Score Improvement",
+            "description": "You can increase two ability scores of your choice, or take a feat."
+        }
+    ],
+    "Level 5": [
+        {
+            "origin": "default",
+            "ability": "Font of Inspiration",
+            "description": "You regain all expended uses of Bardic Inspiration when you finish a short or long rest."
+        }
+    ],
+    "Level 6": [
+        {
+            "origin": "default",
+            "ability": "Countercharm",
+            "description": "You gain the ability to use your music to grant yourself and your allies advantage on saving throws against being frightened or charmed."
+        },
+        {
+            "origin": "default",
+            "ability": "Additional Magical Secrets",
+            "description": "You learn two additional spells from any class, and they don't count against the number of spells you can know as a bard."
+        },
+        {
+            "origin": "College of Valor",
+            "ability": "Extra Attack",
+            "description": "Starting at 6th level, you can attack twice, instead of once, whenever you take the Attack action on your turn."
+        },
+        {
+            "origin": "College of Lore",
+            "ability": "Additional Magical Secrets",
+            "description": "At 6th level, you learn two spells of your choice from any class. A spell you choose must be of a level you can cast, as shown on the Bard table, or a cantrip. The chosen spells count as bard spells for you but don't count against the number of bard spells you know."
+        }
+    ],
+    "Level 7": [
+        {
+            "origin": "default",
+            "ability": "Bardic College Feature",
+            "description": "You gain an additional feature specific to your Bard College."
+        }
+    ],
+    "Level 8": [
+        {
+            "origin": "default",
+            "ability": "Ability Score Improvement",
+            "description": "You can increase two ability scores of your choice, or take a feat."
+        }
+    ],
+    "Level 9": [
+        {
+            "origin": "default",
+            "ability": "Song of Rest (d8)",
+            "description": "The extra healing from your Song of Rest increases to a d8."
+        }
+    ],
+    "Level 10": [
+        {
+            "origin": "default",
+            "ability": "Magical Secrets",
+            "description": "You learn two spells from any class, and they don't count against the number of spells you can know as a bard."
+        }
+    ],
+    "Level 11": [
+        {
+            "origin": "default",
+            "ability": "Countercharm Improvement",
+            "description": "Your Countercharm ability now also grants immunity to being frightened or charmed to you and your allies."
+        }
+    ],
+    "Level 12": [
+        {
+            "origin": "default",
+            "ability": "Ability Score Improvement",
+            "description": "You can increase two ability scores of your choice, or take a feat."
+        }
+    ],
+    "Level 13": [
+        {
+            "origin": "default",
+            "ability": "Song of Rest (d10)",
+            "description": "The extra healing from your Song of Rest increases to a d10."
+        }
+    ],
+    "Level 14": [
+        {
+            "origin": "default",
+            "ability": "Magical Secrets",
+            "description": "You learn two spells from any class, and they don't count against the number of spells you can know as a bard."
+        },
+        {
+            "origin": "College of Valor",
+            "ability": "Battle Magic",
+            "description": "At 14th level, you have mastered the art of weaving spellcasting and weapon use into a single harmonious act. When you use your action to cast a bard spell, you can make one weapon attack as a bonus action."
+        },
+        {
+            "origin": "College of Lore",
+            "ability": "Peerless Skill",
+            "description": "Starting at 14th level, when you make an ability check, you can expend one use of Bardic Inspiration. Roll a Bardic Inspiration die and add the number rolled to your ability check. You can choose to do so after you roll the die for the ability check, but before the DM tells you whether you succeed or fail."
+        }
+    ],
+    "Level 15": [
+        {
+            "origin": "default",
+            "ability": "Bardic College Feature",
+            "description": "You gain an additional feature specific to your Bard College."
+        }
+    ],
+    "Level 16": [
+        {
+            "origin": "default",
+            "ability": "Ability Score Improvement",
+            "description": "You can increase two ability scores of your choice, or take a feat."
+        }
+    ],
+    "Level 17": [
+        {
+            "origin": "default",
+            "ability": "Song of Rest (d12)",
+            "description": "The extra healing from your Song of Rest increases to a d12."
+        }
+    ],
+    "Level 18": [
+        {
+            "origin": "default",
+            "ability": "Magical Secrets",
+            "description": "You learn two spells from any class, and they don't count against the number of spells you can know as a bard."
+        }
+    ],
+    "Level 19": [
+        {
+            "origin": "default",
+            "ability": "Ability Score Improvement",
+            "description": "You can increase two ability scores of your choice, or take a feat."
+        }
+    ],
+    "Level 20": [
+        {
+            "origin": "default",
+            "ability": "Superior Inspiration",
+            "description": "Your Bardic Inspiration die increases to a d12."
+        },
+        {
+            "origin": "default",
+            "ability": "Bardic College Feature",
+            "description": "You gain a capstone feature specific to your Bard College."
+        }
+    ]
+}
