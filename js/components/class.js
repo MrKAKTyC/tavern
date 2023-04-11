@@ -12,7 +12,7 @@ class AbilityTable extends React.Component {
 
 
     componentDidMount() {
-        fetch('/tavern/data/class/bard.json')
+        fetch('/tavern/data/class/Bard.json')
             .then(response => response.json())
             .then(data => this.setState({ data }))
             .catch(error => console.error('Error fetching data:', error));
